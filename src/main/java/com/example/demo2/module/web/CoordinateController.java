@@ -1,22 +1,23 @@
 package com.example.demo2.module.web;
 
-import com.example.demo2.Utils;
-import com.example.demo2.module.dto.CoordinatesDTO;
-import org.springframework.http.ResponseEntity;
+import com.example.demo2.module.model.Coordinates;
+import com.example.demo2.module.service.CoordinatesService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/coords")
 public class CoordinateController {
 
-    @GetMapping
-    public ResponseEntity<CoordinatesDTO> index() {
-        CoordinatesDTO coords = new CoordinatesDTO();
-        coords.setLongitude(Math.random() * 180 * Utils.plusOrMinus());
-        coords.setLatitude(Math.random() * 90 * Utils.plusOrMinus());
+    private final CoordinatesService coordinatesService;
 
-        return ResponseEntity.ok(coords);
+    @GetMapping
+    public List<Coordinates> index() {
+        return coordinatesService.getAll();
     }
 }
